@@ -13,11 +13,17 @@ const allowedOrigins = ['https://a5--harmonious-gnome-362675.netlify.app/', proc
 const app = express();
 app.use(
     cors({
-      credentials: true,
-      origin: process.env.FRONTEND_URL
-
+      origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+          return callback(new Error('The CORS policy for this site does not allow access from the specified origin.'), false);
+        }
+        return callback(null, true);
+      },
+      credentials: true
     })
 );
+
 const sessionOptions = {
   secret: "any string",
   resave: false,
