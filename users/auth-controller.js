@@ -49,10 +49,10 @@ import {findUserByCredentials} from "./users-dao.js";
     res.sendStatus(200);
   };
 const AuthController = (app) => {
-  app.post("/api/users-dao/register", register);
-  app.post("/api/users-dao/login",    login);
-  app.post("/api/users-dao/profile",  profile);
-  app.post("/api/users-dao/logout",   logout);
-  app.put ("/api/users-dao/update",   update);}
+  app.post("/api/users/register", register);
+  app.post("/api/users/login",    login);
+  app.post("/api/users/profile",  profile);
+  app.post("/api/users/logout",   logout);
+  app.put ("/api/users/update",   update);}
 export default AuthController;
 
