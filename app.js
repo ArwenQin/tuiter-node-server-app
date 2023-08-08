@@ -4,15 +4,18 @@ import cors from 'cors'
 import HelloController from "./controllers/hello-controller.js"
 import UserController from "./users/users-controller.js"
 import TuitsController from "./controllers/tuits/tuits-controller.js";
+import "dotenv/config";
+
 import session from "express-session";
 import AuthController from "./users/auth-controller.js";
 
-
+const allowedOrigins = ['https://a5--harmonious-gnome-362675.netlify.app/', process.env.FRONTEND_URL];
 const app = express();
 app.use(
     cors({
       credentials: true,
-      origin: "http://localhost:3000",
+      origin: process.env.FRONTEND_URL
+
     })
 );
 const sessionOptions = {
@@ -20,9 +23,15 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
 };
-app.use(
-    session(sessionOptions)
-);
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+  };
+}
+app.use(session(sessionOptions));
+
 
 app.use(express.json());
 
@@ -34,5 +43,5 @@ HelloController(app)
 UserController(app)
 AuthController(app);
 
-app.listen(4000)
+app.listen(process.env.PORT || 4000)
 
