@@ -24,6 +24,7 @@ app.use(
     })
 );
 
+
 const sessionOptions = {
   secret: "any string",
   resave: false,
@@ -36,6 +37,7 @@ if (process.env.NODE_ENV !== "development") {
     secure: true,
   };
 }
+
 app.use(session(sessionOptions));
 
 
