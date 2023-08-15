@@ -48,26 +48,11 @@ const profile = (req, res) => {
   };
 
  const update = async (req, res) => {
-        const currentUser = req.session["currentUser"];
-        if (!currentUser) {
-            res.status(404).json({ message: "User not logged in." });
-            return;
-        }
-
-        const userId = currentUser._id;
-        const updates = req.body;
-
-        try {
-            // Update the user based on ID
-            const result = await usersDao.updateUser(userId, updates);
-            const updatedUser = await usersDao.findUserById(userId);
-
-                req.session["currentUser"] = updatedUser;
-                res.json({ message: "User updated successfully.", user: updatedUser });
-
-        } catch (error) {
-            res.status(500).json({ message: "Server error.", error: error.message });
-        }
+  const id = req.body._id;
+  const status = await usersDao.updateUser(id, req.body);
+  const user = await usersDao.findUserById(id);
+  req.session["currentUser"] = user;
+  res.json(status);
     };
 
 const AuthController = (app) => {
