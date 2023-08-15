@@ -9,6 +9,10 @@ import "dotenv/config";
 import session from "express-session";
 import AuthController from "./users/auth-controller.js";
 
+import mongoose from "mongoose";
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/tuiter'
+mongoose.connect(CONNECTION_STRING);
+
 const allowedOrigins = ['https://a5--harmonious-gnome-362675.netlify.app', process.env.FRONTEND_URL];
 const app = express();
 app.use(
