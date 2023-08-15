@@ -48,7 +48,8 @@ const profile = (req, res) => {
   };
 
   const update   =async (req, res) => {
-    const userId = req.body._id;
+    const currentUser = req.session["currentUser"];
+    const userId = currentUser._id;
     const updates = req.body;
     usersDao.updateUser(userId, updates);
     res.sendStatus(200);
