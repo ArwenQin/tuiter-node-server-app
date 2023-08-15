@@ -56,7 +56,7 @@ const update = async (req, res) => {
 
   const userId = currentUser._id;
   const updates = req.body;
-
+  console.log("Updating user with ID: " + userId);
   try {
     // Update the user based on ID
     console.log("Updating user with ID: " + userId);
