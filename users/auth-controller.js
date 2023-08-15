@@ -47,17 +47,28 @@ const profile = (req, res) => {
     res.sendStatus(200);
   };
 
-  const update   =async (req, res) => {
-    const currentUser = req.session["currentUser"];
-    const userId = currentUser._id;
-    const updates = req.body;
+const update = async (req, res) => {
+  const currentUser = req.session["currentUser"];
+  if (!currentUser) {
+    res.status(404).json({ message: "User not logged in." });
+    return;
+  }
+
+  const userId = currentUser._id;
+  const updates = req.body;
+
+  try {
+    // Update the user based on ID
     const result = await usersDao.updateUser(userId, updates);
     const updatedUser = await usersDao.findUserById(userId);
 
     req.session["currentUser"] = updatedUser;
-    res.json({ user: updatedUser });
-    res.sendStatus(200);
-  };
+    res.json({ message: "User updated successfully.", user: updatedUser });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error.", error: error.message });
+  }
+};
 const AuthController = (app) => {
   app.post("/api/users/register", register);
   app.post("/api/users/login",    login);
