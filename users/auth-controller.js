@@ -51,7 +51,7 @@ const profile = (req, res) => {
     const currentUser = req.session["currentUser"];
     const userId = currentUser._id;
     const updates = req.body;
-    await usersDao.updateUser(userId, updates);
+    const status = await usersDao.updateUser(userId, updates);
     res.sendStatus(200);
   };
 const AuthController = (app) => {
