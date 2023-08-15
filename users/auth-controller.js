@@ -49,7 +49,7 @@ const profile = (req, res) => {
 
 const update = async (req, res) => {
 
-   const id = req.params.id;
+   const id = req.params._id;
   const status = await usersDao.updateUser(id, req.body);
   const user = await usersDao.findUserById(id);
   req.session["currentUser"] = user;
