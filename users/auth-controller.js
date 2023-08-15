@@ -54,21 +54,25 @@ const update = async (req, res) => {
     return;
   }
 
-  const userId = req.params._id;
+  const userId = currentUser._id;
   const updates = req.body;
 
   try {
     // Update the user based on ID
+    console.log("Updating user with ID: " + userId);
     const result = await usersDao.updateUser(userId, updates);
     const updatedUser = await usersDao.findUserById(userId);
 
     req.session["currentUser"] = updatedUser;
+    console.log("updated",updatedUser);
     res.status(200).json({ message: "User updated successfully.", user: updatedUser });
+
 
   } catch (error) {
     res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
+
 const AuthController = (app) => {
   app.post("/api/users/register", register);
   app.post("/api/users/login",    login);
