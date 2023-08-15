@@ -54,7 +54,7 @@ const update = async (req, res) => {
     return;
   }
 
-  const userId = currentUser._id;
+  const userId = req.params._id;
   const updates = req.body;
 
   try {
@@ -63,7 +63,7 @@ const update = async (req, res) => {
     const updatedUser = await usersDao.findUserById(userId);
 
     req.session["currentUser"] = updatedUser;
-    res.json({ message: "User updated successfully.", user: updatedUser });
+    res.status(200).json({ message: "User updated successfully.", user: updatedUser });
 
   } catch (error) {
     res.status(500).json({ message: "Server error.", error: error.message });
