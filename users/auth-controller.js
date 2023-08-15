@@ -47,22 +47,22 @@ const profile = (req, res) => {
     res.sendStatus(200);
   };
 
-const update = async (req, res) => {
+//const update = async (req, res) => {
 
-   const id = "64dba88547a67ce8126807e7";
-  const status = await usersDao.updateUser(id, req.body);
-  const user = await usersDao.findUserById(id);
-  req.session["currentUser"] = user;
-  res.json(status);
+  // const id = "64dba88547a67ce8126807e7";
+ // const status = await usersDao.updateUser(id, req.body);
+  //const user = await usersDao.findUserById(id);
+ // req.session["currentUser"] = user;
+ // res.json(status);
 
    
-};
+//};
 
 const AuthController = (app) => {
   app.post("/api/users/register", register);
   app.post("/api/users/login",    login);
   app.post("/api/users/profile",  profile);
   app.post("/api/users/logout",   logout);
-  app.put ("/api/users/update",   update);}
+ // app.put ("/api/users/update",   update);}
 export default AuthController;
 
