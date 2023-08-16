@@ -29,31 +29,29 @@ app.use(
 );
 
 
-const sessionOptions = {
-  secret: "any string",
-  resave: false,
-  saveUninitialized: false,
-};
-if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-  };
-}
-
-app.use(session(sessionOptions));
-
-
 app.use(express.json());
 
-const port = process.env.PORT || 4000;
+const sessionOptions = {
+    secret: "any string",
+    resave: false,
+    saveUninitialized: false,
+};
+
+if (process.env.NODE_ENV !== "development") {
+    sessionOptions.proxy = true;
+    sessionOptions.cookie = {
+        sameSite: "none",
+        secure: true,
+    };
+}
+app.use(session(sessionOptions));
 
 TuitsController(app);
-
-HelloController(app)
-UserController(app)
 AuthController(app);
+HelloController(app);
+UserController(app);
+
+const port = process.env.PORT || 4000;
 
 app.listen(process.env.PORT || 4000)
 
